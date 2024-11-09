@@ -34,17 +34,17 @@ const paymentService = {
 
   updateProcessing: async (update: IWebhookUpdate) => {
     if (update === undefined) {
-      return
+      return false
     }
 
     const payment = await paymentRepository.findPaymentByInvoiceId(update.payload.invoice_id)
 
     if (payment === null || payment.status !== 'active') {
-      return
+      return false
     }
 
     if (update.payload.status !== 'paid') {
-      return
+      return false
     }
 
     switch (update.update_type) {
@@ -55,7 +55,7 @@ const paymentService = {
           status: 'processed'
         })
 
-        break
+        return true
       }
 
       default:

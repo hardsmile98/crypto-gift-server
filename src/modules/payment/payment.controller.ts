@@ -10,7 +10,18 @@ const paymentController = {
     res: Response
   ): Promise<void> => {
     try {
-      await paymentService.updateProcessing(req.body)
+      const isProcessed = await paymentService.updateProcessing(req.body)
+
+      if (isProcessed === false) {
+        logger.warn('Webhook update not processed')
+
+        res.status(StatusCodes.BAD_REQUEST).json({
+          status: StatusCodes.BAD_REQUEST,
+          message: ReasonPhrases.BAD_REQUEST
+        })
+
+        return
+      }
 
       res.status(StatusCodes.OK).json({ status: StatusCodes.OK })
     } catch (error) {
