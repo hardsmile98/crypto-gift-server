@@ -9,7 +9,7 @@ export class AddGifts implements MigrationInterface {
       {
         name: 'Delicious Cake',
         description: 'Purchase this gift for the opportunity to give it to another user.',
-        price: 10,
+        price: 5,
         currency: 'USDT',
         slug: 'delicious-cake',
         maxAvailable: 1000,
@@ -21,7 +21,7 @@ export class AddGifts implements MigrationInterface {
       {
         name: 'Green Star',
         description: 'Purchase this gift for the opportunity to give it to another user.',
-        price: 5,
+        price: 0.1,
         currency: 'TON',
         slug: 'green-star',
         maxAvailable: 2000,
@@ -33,7 +33,7 @@ export class AddGifts implements MigrationInterface {
       {
         name: 'Blue Star',
         description: 'Purchase this gift for the opportunity to give it to another user.',
-        price: 0.1,
+        price: 0.01,
         currency: 'ETH',
         slug: 'blue-star',
         maxAvailable: 5000,
