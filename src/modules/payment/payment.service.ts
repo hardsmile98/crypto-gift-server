@@ -1,5 +1,5 @@
 import CryptoBotAPI from 'crypto-bot-api'
-import { config, logger } from '../../lib'
+import { config } from '../../lib'
 import { paymentRepository } from './payment.repository'
 import { isDev } from '../../utils'
 import { type IWebhookUpdate, type IGift } from '../index'
@@ -20,7 +20,7 @@ const paymentService = {
       asset: gift.currency,
       amount: gift.price.toString(),
       paidBtnName: 'callback',
-      paidBtnUrl: `${config.CLIENT_URL}/order/${newPayment._id}`,
+      paidBtnUrl: 'https://t.me/giftbot_crypto_bot/app',
       hiddenMessage: 'Спасибо за покупку!',
       expiresIn: 3600
     })
@@ -49,8 +49,6 @@ const paymentService = {
 
     switch (update.update_type) {
       case 'invoice_paid': {
-        logger.warn('Processing start!')
-
         await orderService.purchaseGift(payment)
 
         await paymentRepository.updatePayment(payment._id, {
