@@ -34,20 +34,16 @@ const paymentService = {
 
   updateProcessing: async (update: IWebhookUpdate) => {
     if (update === undefined) {
-      logger.error('Update empty!')
       return
     }
 
-    const payment = await paymentRepository.findPaymentByInvoiceId(update.payload.id)
+    const payment = await paymentRepository.findPaymentByInvoiceId(update.payload.invoice_id)
 
     if (payment === null || payment.status !== 'active') {
-      logger.error('Status or payment empty!')
       return
     }
 
     if (update.payload.status !== 'paid') {
-      logger.error('Status is not paid!')
-
       return
     }
 
