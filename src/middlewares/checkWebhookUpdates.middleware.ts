@@ -16,6 +16,8 @@ export const checkWebhookUpdates = (
     const hmac = crypto.createHmac('sha256', secret).update(checkString).digest('hex')
 
     if (signature !== hmac) {
+      logger.error('Singnature in webhook invalid')
+
       res.status(StatusCodes.BAD_REQUEST).json({
         status: StatusCodes.BAD_REQUEST,
         message: 'Singnature in webhook invalid'
