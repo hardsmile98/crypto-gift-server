@@ -12,7 +12,7 @@ const userController = {
     res: Response
   ): Promise<void> => {
     try {
-      const leaderboard = await userSevice.getLeaderboard(1000)
+      const leaderboard = await userSevice.getLeaderboard(100)
 
       res.status(StatusCodes.OK).json({
         status: StatusCodes.OK,

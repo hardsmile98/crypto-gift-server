@@ -25,7 +25,7 @@ const userRepository = {
   },
 
   getLeaderboard: async (limit: number): Promise<IUser[]> => {
-    return await User.find().sort({ giftsReceived: -1, createdAt: -1 }).limit(limit)
+    return await User.find().sort({ giftsReceived: -1, createdAt: 1 }).limit(limit)
   },
 
   findHigherRankCount: async (user: IUser): Promise<number> => {

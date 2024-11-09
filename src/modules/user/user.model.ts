@@ -32,6 +32,6 @@ const userSchema = new Schema<IUser>({
 })
 
 userSchema.index({ telegramId: 1 }, { unique: true })
-userSchema.index({ giftsReceived: -1, createdAt: -1 })
+userSchema.index({ giftsReceived: -1, createdAt: 1 })
 
 export const User = model<IUser>('User', userSchema)
