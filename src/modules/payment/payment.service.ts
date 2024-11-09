@@ -20,7 +20,7 @@ const paymentService = {
       asset: gift.currency,
       amount: gift.price.toString(),
       paidBtnName: 'callback',
-      paidBtnUrl: 'https://t.me/giftbot_crypto_bot/app',
+      paidBtnUrl: `${config.CLIENT_URL}/order/${newPayment._id}`,
       hiddenMessage: 'Спасибо за покупку!',
       expiresIn: 3600
     })
