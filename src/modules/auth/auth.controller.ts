@@ -37,16 +37,13 @@ const authController = {
       let user = await userSevice.getUserByTelegramId(initDataParsed.user.id)
 
       if (user === null) {
-        const avatar = await userSevice.getAvatar(initDataParsed.user.id)
-
         const newUserData = {
           telegramId: initDataParsed.user.id,
           isPremium: initDataParsed.user.is_premium,
           firstName: initDataParsed.user.first_name,
           lastName: initDataParsed.user.last_name,
           languageCode: initDataParsed.user.language_code,
-          username: initDataParsed.user.username,
-          avatar: avatar ?? ''
+          username: initDataParsed.user.username
         }
 
         user = await userSevice.createUser(newUserData)
