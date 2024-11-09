@@ -1,5 +1,5 @@
 import CryptoBotAPI from 'crypto-bot-api'
-import { config } from '../../lib'
+import { config, logger } from '../../lib'
 import { paymentRepository } from './payment.repository'
 import { isDev } from '../../utils'
 import { type IWebhookUpdate, type IGift } from '../index'
@@ -34,21 +34,27 @@ const paymentService = {
 
   updateProcessing: async (update: IWebhookUpdate) => {
     if (update === undefined) {
+      logger.error('Update empty!')
       return
     }
 
     const payment = await paymentRepository.findPaymentByInvoiceId(update.payload.id)
 
     if (payment === null || payment.status !== 'active') {
+      logger.error('Status or payment empty!')
       return
     }
 
     if (update.payload.status !== 'paid') {
+      logger.error('Status is not paid!')
+
       return
     }
 
     switch (update.update_type) {
       case 'invoice_paid': {
+        logger.warn('Processing start!')
+
         await orderService.purchaseGift(payment)
 
         await paymentRepository.updatePayment(payment._id, {
