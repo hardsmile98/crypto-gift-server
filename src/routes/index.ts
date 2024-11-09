@@ -9,13 +9,9 @@ import {
 } from '../modules'
 import { checkAuthMiddleware } from '../middlewares'
 
-import { testRouter } from '../modules/test/test.router' // TODO DEL!
-
 const routerWithoutAuth: Router = Router().use(
   authRouter,
-  paymentRouter,
-
-  testRouter
+  paymentRouter
 )
 
 const routerWithAuth: Router = Router().use(
