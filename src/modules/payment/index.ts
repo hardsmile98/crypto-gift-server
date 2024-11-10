@@ -1,6 +1,3 @@
-export * from './payment.controller'
 export * from './payment.router'
 export * from './payment.service'
 export * from './payment.types'
-export * from './payment.model'
-export * from './payment.repository'

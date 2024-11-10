@@ -7,7 +7,8 @@ import {
   getOrderById,
   getOrderByPaymentIdSchema,
   getOrdersByStatusSchema,
-  getReceivedOrders
+  getReceivedOrders,
+  receiveGiftSchema
 } from './order.schema'
 import { orderController } from './order.controller'
 
@@ -17,6 +18,12 @@ orderRouter.post(
   '/order/buyGift',
   validateRequest(buyGiftSchema),
   orderController.buyGift
+)
+
+orderRouter.post(
+  '/order/receiveGift',
+  validateRequest(receiveGiftSchema),
+  orderController.receiveGift
 )
 
 orderRouter.get(

@@ -3,11 +3,16 @@ import { Order, OrderAction } from './order.model'
 import { type IOrderAction, type IOrder, type EnumOrderStatus, type IExtendOrder } from './order.type'
 
 const orderRepository = {
-  findOrderById: async (id: string): Promise<IExtendOrder | null> => {
+  findExtendOrderById: async (id: string): Promise<IExtendOrder | null> => {
     const order = await Order.findById(id)
       .populate('userId')
       .populate('giftId')
       .populate('recipientId')
+    return order
+  },
+
+  findOrderById: async (id: string): Promise<IOrder | null> => {
+    const order = await Order.findById(id)
     return order
   },
 
@@ -16,8 +21,8 @@ const orderRepository = {
     return order
   },
 
-  updateOrder: async (id: string, update: UpdateQuery<IOrder>): Promise<void> => {
-    await Order.updateOne(
+  updateOrder: async (id: string, update: UpdateQuery<IOrder>): Promise<IOrder | null> => {
+    return await Order.findOneAndUpdate(
       { _id: id },
       { ...update },
       { new: true }

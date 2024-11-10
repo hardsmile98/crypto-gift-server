@@ -12,6 +12,10 @@ const orderSchema = new Schema({
     ref: 'Gift',
     required: true
   },
+  hash: {
+    type: String,
+    required: true
+  },
   status: {
     type: String,
     enum: ['purchased', 'sent'],
@@ -33,14 +37,12 @@ const orderSchema = new Schema({
   }
 })
 
-orderSchema.index({ status: 1 })
-orderSchema.index({ paymentId: 1 })
-
 const orderActionSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: true,
+    index: true
   },
   action: {
     type: String,
@@ -54,8 +56,6 @@ const orderActionSchema = new Schema({
 }, {
   timestamps: true
 })
-
-orderActionSchema.index({ userId: 1 })
 
 export const Order = model<IOrder>('Order', orderSchema)
 export const OrderAction = model<IOrderAction>('OrderAction', orderActionSchema)

@@ -19,6 +19,7 @@ export enum EnumOrderStatus {
 
 export interface IOrder {
   _id: string
+  hash: string
   userId: string
   giftId: string
   status: EnumOrderStatus

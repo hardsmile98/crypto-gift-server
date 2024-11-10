@@ -58,6 +58,20 @@ export const buyGiftSchema = z.object({
   })
 })
 
+export const receiveGiftSchema = z.object({
+  body: z.object({
+    id: z.string({
+      message: 'Id is required'
+    }).refine((val) => {
+      return mongoose.Types.ObjectId.isValid(val)
+    }),
+    hash: z.string({
+      message: 'Hash is required'
+    }).min(64)
+  })
+})
+
+export type ReceiveGift = z.infer<typeof receiveGiftSchema>['body']
 export type BuyGift = z.infer<typeof buyGiftSchema>['body']
 export type GetReceivedOrders = z.infer<typeof getReceivedOrders>['query']
 export type GetOrderById = z.infer<typeof getOrderById>['query']

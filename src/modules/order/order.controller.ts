@@ -6,7 +6,8 @@ import {
   type GetOrderById,
   type BuyGift,
   type GetGiftHistory,
-  type GetReceivedOrders
+  type GetReceivedOrders,
+  type ReceiveGift
 } from './order.schema'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { logger } from '../../lib'
@@ -115,7 +116,7 @@ const orderController = {
     try {
       const userId = req.context?.userId
 
-      const order = await orderService.getOrderById(req.query.id)
+      const order = await orderService.getExtendOrderById(req.query.id)
 
       if (order === null) {
         res.status(StatusCodes.BAD_REQUEST).json({
@@ -260,6 +261,104 @@ const orderController = {
       res.status(StatusCodes.OK).json({
         status: StatusCodes.OK,
         data: payment
+      })
+    } catch (error) {
+      logger.error(error)
+
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+        status: StatusCodes.INTERNAL_SERVER_ERROR,
+        message: ReasonPhrases.INTERNAL_SERVER_ERROR
+      })
+    }
+  },
+
+  receiveGift: async (
+    req: IContextRequest<unknown, unknown, ReceiveGift>,
+    res: Response
+  ) => {
+    const userId = req.context?.userId
+
+    if (userId === undefined) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        status: StatusCodes.BAD_REQUEST,
+        message: 'User is not found'
+      })
+
+      return
+    }
+
+    const { hash, id } = req.body
+
+    const order = await orderService.getOrderById(id)
+
+    if (order === null) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        status: StatusCodes.BAD_REQUEST,
+        message: 'Order is not found'
+      })
+
+      return
+    }
+
+    if (order.hash !== hash) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        status: StatusCodes.BAD_REQUEST,
+        message: 'An order with this hash was not found'
+      })
+
+      return
+    }
+
+    if (order.userId === userId) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        status: StatusCodes.BAD_REQUEST,
+        message: 'You can not receive your gift'
+      })
+
+      return
+    }
+
+    if (order.status === 'sent') {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        status: StatusCodes.BAD_REQUEST,
+        message: 'The gift has already been given'
+      })
+
+      return
+    }
+
+    const sender = await userSevice.getUserById(order.userId)
+
+    if (sender === null) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        status: StatusCodes.BAD_REQUEST,
+        message: 'Sender not found'
+      })
+
+      return
+    }
+
+    const gift = await giftSevice.getGift(order.giftId)
+
+    if (gift === null) {
+      res.status(StatusCodes.BAD_REQUEST).json({
+        status: StatusCodes.BAD_REQUEST,
+        message: 'Gift not found'
+      })
+
+      return
+    }
+
+    const receivedOrder = await orderService.receiveGift(order, userId)
+
+    try {
+      res.status(StatusCodes.OK).json({
+        status: StatusCodes.OK,
+        data: {
+          ...receivedOrder,
+          gift,
+          user: sender
+        }
       })
     } catch (error) {
       logger.error(error)

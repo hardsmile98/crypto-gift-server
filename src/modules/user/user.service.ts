@@ -1,4 +1,4 @@
-import { telegramService } from 'modules/telegram'
+import { telegramService } from '../telegram'
 import { userRepository } from './user.repository'
 import { type IUser } from './user.types'
 
