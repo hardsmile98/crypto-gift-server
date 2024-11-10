@@ -3,7 +3,7 @@ import { userRepository } from './user.repository'
 import { type IUser } from './user.types'
 
 const userSevice = {
-  getUserByTelegramId: async (telegramId: bigint): Promise<IUser | null> => {
+  getUserByTelegramId: async (telegramId: number): Promise<IUser | null> => {
     const user = await userRepository.findByTelegramId(telegramId)
     return user
   },

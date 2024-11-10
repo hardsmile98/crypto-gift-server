@@ -1,6 +1,6 @@
 export interface IUser {
   _id: string
-  telegramId: bigint
+  telegramId: number
   firstName: string
   lastName?: string
   username?: string

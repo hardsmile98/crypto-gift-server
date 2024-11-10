@@ -3,7 +3,7 @@ import { User } from './user.model'
 import { type UpdateQuery } from 'mongoose'
 
 const userRepository = {
-  findByTelegramId: async (telegramId: bigint): Promise<IUser | null> => {
+  findByTelegramId: async (telegramId: number): Promise<IUser | null> => {
     return await User.findOne({ telegramId })
   },
 

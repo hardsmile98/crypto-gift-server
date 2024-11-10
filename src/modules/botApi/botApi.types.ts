@@ -1,5 +1,5 @@
 export interface NotificationData {
-  telegramId: bigint
+  telegramId: number
   action: 'purchase' | 'send' | 'receive'
   orderDetail: {
     gift: string

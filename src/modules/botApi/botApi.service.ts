@@ -10,7 +10,7 @@ const api = axios.create({
 })
 
 const botApiService = {
-  getAvatar: async (telegramId: bigint): Promise<string> => {
+  getAvatar: async (telegramId: number): Promise<string> => {
     try {
       const response = await api.post<{ data: string }>('/getAvatar', {
         body: {

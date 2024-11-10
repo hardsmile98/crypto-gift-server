@@ -1,6 +1,6 @@
 export interface InitDataPayload {
   user?: {
-    id: bigint
+    id: number
     first_name: string
     last_name?: string
     username?: string

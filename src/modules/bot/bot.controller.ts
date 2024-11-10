@@ -11,7 +11,7 @@ const botController = {
   ): Promise<void> => {
     try {
       const orderId = req.query.orderId
-      const telegramId = BigInt(req.query.telegramId)
+      const telegramId = +req.query.telegramId
 
       const order = await orderService.getExtendOrderById(orderId)
 
@@ -26,6 +26,9 @@ const botController = {
 
       if (typeof order?.userId === 'object') {
         if (order.userId.telegramId !== telegramId || order.status !== 'purchased') {
+          console.log(order.status !== 'purchased')
+          console.log(order.userId.telegramId !== telegramId, telegramId, order.userId.telegramId)
+
           res.status(StatusCodes.BAD_REQUEST).json({
             status: StatusCodes.BAD_REQUEST,
             data: null
