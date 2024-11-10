@@ -33,8 +33,11 @@ const userRepository = {
       {
         $match: {
           $or: [
-            { giftsSent: { $gt: user.giftsSent } },
-            { giftsSent: { $eq: user.giftsSent }, createdAt: { $lt: user.createdAt } }
+            { giftsReceived: { $gt: user.giftsReceived } },
+            {
+              giftsReceived: user.giftsReceived,
+              createdAt: { $lt: user.createdAt }
+            }
           ]
         }
       },
