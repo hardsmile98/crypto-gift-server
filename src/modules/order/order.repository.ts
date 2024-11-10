@@ -174,6 +174,9 @@ const orderRepository = {
         $unwind: { path: '$recipient', preserveNullAndEmptyArrays: true }
       },
       {
+        $sort: { createdAt: -1 }
+      },
+      {
         $group: {
           _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
           actions: { $push: '$$ROOT' }
