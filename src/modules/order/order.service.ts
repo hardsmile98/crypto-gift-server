@@ -1,4 +1,4 @@
-import { userSevice } from 'modules/user'
+import { userSevice } from '../user'
 import { generateRandomHash } from '../../utils'
 import { giftSevice } from '../gift'
 import { type IPayment } from '../payment'
