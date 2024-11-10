@@ -30,7 +30,7 @@ const orderRepository = {
   },
 
   finOrderByPayment: async (paymentId: string): Promise<IExtendOrder | null> => {
-    const order = await Order.findOne({ paymentId, status: 'purchase' })
+    const order = await Order.findOne({ paymentId, status: 'purchased' })
       .populate('userId')
       .populate('giftId')
       .populate('recipientId')
@@ -198,7 +198,7 @@ const orderRepository = {
         }
       },
       {
-        $sort: { date: 1 }
+        $sort: { date: -1 }
       }
     ])
 
