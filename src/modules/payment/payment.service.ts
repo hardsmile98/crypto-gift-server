@@ -20,7 +20,7 @@ const paymentService = {
       asset: gift.currency,
       amount: gift.price.toString(),
       paidBtnName: 'callback',
-      paidBtnUrl: `${config.MINIAPP_URL}?startapp=paymentId_${newPayment._id}`,
+      paidBtnUrl: `${config.MINIAPP_URL}?startapp=purchase_${newPayment._id}`,
       hiddenMessage: 'Спасибо за покупку!',
       expiresIn: 3600
     })
