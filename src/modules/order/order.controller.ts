@@ -354,11 +354,7 @@ const orderController = {
     try {
       res.status(StatusCodes.OK).json({
         status: StatusCodes.OK,
-        data: {
-          ...receivedOrder,
-          gift,
-          user: sender
-        }
+        data: receivedOrder
       })
     } catch (error) {
       logger.error(error)

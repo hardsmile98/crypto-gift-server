@@ -20,7 +20,9 @@ const orderService = {
   },
 
   receiveGift: async (order: IOrder, recipientId: string) => {
-    const receivedOrder = await orderRepository.updateOrder(order._id, { status: 'sent', sendDate: Date.now() })
+    await orderRepository.updateOrder(order._id, { status: 'sent', sendDate: Date.now() })
+
+    const receivedOrder = await orderRepository.findExtendOrderById(order._id)
 
     await orderService.addHistoryRecord(recipientId, order, EnumOrderAction.receive)
     await orderService.addHistoryRecord(order.userId, order, EnumOrderAction.send)

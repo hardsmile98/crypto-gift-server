@@ -21,8 +21,8 @@ const orderRepository = {
     return order
   },
 
-  updateOrder: async (id: string, update: UpdateQuery<IOrder>): Promise<IOrder | null> => {
-    return await Order.findOneAndUpdate(
+  updateOrder: async (id: string, update: UpdateQuery<IOrder>): Promise<void> => {
+    await Order.updateOne(
       { _id: id },
       { ...update },
       { new: true }
