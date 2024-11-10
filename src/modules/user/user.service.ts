@@ -1,4 +1,4 @@
-import { telegramService } from '../telegram'
+import { botApiService } from '../botApi'
 import { userRepository } from './user.repository'
 import { type IUser } from './user.types'
 
@@ -15,7 +15,7 @@ const userSevice = {
 
   createUser: async (data: Partial<IUser>): Promise<IUser> => {
     if (data.telegramId !== undefined) {
-      const avatar = await telegramService.getAvatar(data.telegramId)
+      const avatar = await botApiService.getAvatar(data.telegramId)
 
       data.avatar = avatar ?? ''
     }

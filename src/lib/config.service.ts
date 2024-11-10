@@ -12,7 +12,8 @@ const configSchema = z.object({
   JWT_SECRET: z.string(),
   TELEGRAM_BOT_TOKEN: z.string(),
   CRYPTO_BOT_API_TOKEN: z.string(),
-  MINIAPP_URL: z.string()
+  MINIAPP_URL: z.string(),
+  BOT_API_URL: z.string()
 })
 
 export type Config = z.infer<typeof configSchema>

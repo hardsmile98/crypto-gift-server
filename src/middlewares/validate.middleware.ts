@@ -1,6 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import { type Request, type Response, type NextFunction } from 'express'
 import { type AnyZodObject, ZodError } from 'zod'
+import { logger } from '../lib'
 
 export const validateRequest =
   (schema: AnyZodObject) =>
@@ -15,6 +16,8 @@ export const validateRequest =
         next()
       } catch (error) {
         if (error instanceof ZodError) {
+          logger.error(error)
+
           res.status(StatusCodes.BAD_REQUEST).json({
             status: StatusCodes.BAD_REQUEST,
             message: 'Error in validation data',

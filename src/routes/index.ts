@@ -5,13 +5,15 @@ import {
   giftRouter,
   paymentRouter,
   userRouter,
-  orderRouter
+  orderRouter,
+  botRouter
 } from '../modules'
 import { checkAuthMiddleware } from '../middlewares'
 
 const routerWithoutAuth: Router = Router().use(
   authRouter,
-  paymentRouter
+  paymentRouter,
+  botRouter
 )
 
 const routerWithAuth: Router = Router().use(

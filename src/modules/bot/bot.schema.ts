@@ -1,9 +1,14 @@
 import z from 'zod'
 
-export const createUserSchema = z.object({
-  body: z.object({
+export const getOrderSchema = z.object({
+  query: z.object({
     telegramId: z.string({
-      message: 'Id is required'
+      message: 'telegramId is required'
+    }),
+    orderId: z.string({
+      message: 'orderId is required'
     })
   })
 })
+
+export type GetOrder = z.infer<typeof getOrderSchema>['query']
