@@ -30,7 +30,7 @@ const orderRepository = {
   },
 
   finOrderByPayment: async (paymentId: string): Promise<IExtendOrder | null> => {
-    const order = await Order.findOne({ paymentId })
+    const order = await Order.findOne({ paymentId, status: 'purchase' })
       .populate('userId')
       .populate('giftId')
       .populate('recipientId')
