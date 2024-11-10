@@ -309,7 +309,7 @@ const orderController = {
       return
     }
 
-    if (order.userId === userId) {
+    if (order.userId.toString() === userId) {
       res.status(StatusCodes.BAD_REQUEST).json({
         status: StatusCodes.BAD_REQUEST,
         message: 'You can not receive your gift'

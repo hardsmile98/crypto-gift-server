@@ -21,7 +21,7 @@ const orderService = {
   },
 
   receiveGift: async (order: IOrder, recipientId: string) => {
-    await orderRepository.updateOrder(order._id, { status: 'sent', sendDate: Date.now() })
+    await orderRepository.updateOrder(order._id, { status: 'sent', sendDate: Date.now(), recipientId })
 
     await userSevice.increaseGiftsReceived(recipientId)
     await userSevice.increaseGiftsSent(order.userId)
