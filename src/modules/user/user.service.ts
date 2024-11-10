@@ -25,6 +25,30 @@ const userSevice = {
     return newUser
   },
 
+  increaseGiftsReceived: async (id: string) => {
+    const user = await userSevice.getUserById(id)
+
+    if (user === null) {
+      return
+    }
+
+    await userRepository.updateUser(user._id, {
+      giftsReceived: user.giftsReceived + 1
+    })
+  },
+
+  increaseGiftsSent: async (id: string) => {
+    const user = await userSevice.getUserById(id)
+
+    if (user === null) {
+      return
+    }
+
+    await userRepository.updateUser(user._id, {
+      giftsSent: user.giftsSent + 1
+    })
+  },
+
   getLeaderboard: async (limit: number) => {
     return await userRepository.getLeaderboard(limit)
   },

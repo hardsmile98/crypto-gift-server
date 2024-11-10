@@ -1,3 +1,4 @@
+import { userSevice } from 'modules/user'
 import { generateRandomHash } from '../../utils'
 import { giftSevice } from '../gift'
 import { type IPayment } from '../payment'
@@ -21,6 +22,9 @@ const orderService = {
 
   receiveGift: async (order: IOrder, recipientId: string) => {
     await orderRepository.updateOrder(order._id, { status: 'sent', sendDate: Date.now() })
+
+    await userSevice.increaseGiftsReceived(recipientId)
+    await userSevice.increaseGiftsSent(order.userId)
 
     const receivedOrder = await orderRepository.findExtendOrderById(order._id)
 

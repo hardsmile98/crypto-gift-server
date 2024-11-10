@@ -37,6 +37,8 @@ const orderSchema = new Schema({
   }
 })
 
+orderSchema.index({ createdAt: -1 })
+
 const orderActionSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,

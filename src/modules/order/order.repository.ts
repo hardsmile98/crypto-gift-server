@@ -38,7 +38,7 @@ const orderRepository = {
   },
 
   findOrdersByStatus: async (status: EnumOrderStatus, userId: string): Promise<IExtendOrder[]> => {
-    const orders = await Order.find({ status, userId })
+    const orders = await Order.find({ status, userId }).sort({ createdAt: -1 })
       .populate('giftId')
 
     return orders

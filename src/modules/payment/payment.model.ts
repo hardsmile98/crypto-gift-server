@@ -19,7 +19,8 @@ const paymentSchema = new Schema({
     required: true
   },
   invoiceId: {
-    type: Schema.Types.Number
+    type: Schema.Types.Number,
+    index: true
   },
   createAt: {
     type: Date,
@@ -28,7 +29,5 @@ const paymentSchema = new Schema({
 }, {
   timestamps: true
 })
-
-paymentSchema.index({ invoiceId: 1 })
 
 export const Payment = model<IPayment>('Payment', paymentSchema)

@@ -16,8 +16,8 @@ const userRepository = {
     return user
   },
 
-  updateUser: async (id: string, update: UpdateQuery<IUser>): Promise<IUser | null> => {
-    return await User.findOneAndUpdate(
+  updateUser: async (id: string, update: UpdateQuery<IUser>): Promise<void> => {
+    await User.updateOne(
       { _id: id },
       { ...update },
       { new: true }
