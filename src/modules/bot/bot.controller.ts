@@ -26,9 +26,6 @@ const botController = {
 
       if (typeof order?.userId === 'object') {
         if (order.userId.telegramId !== telegramId || order.status !== 'purchased') {
-          console.log(order.status !== 'purchased')
-          console.log(order.userId.telegramId !== telegramId, telegramId, order.userId.telegramId)
-
           res.status(StatusCodes.BAD_REQUEST).json({
             status: StatusCodes.BAD_REQUEST,
             data: null
