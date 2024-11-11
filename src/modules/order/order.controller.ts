@@ -288,7 +288,7 @@ const orderController = {
 
     const { hash, id } = req.body
 
-    const order = await orderService.getOrderById(id)
+    let order = await orderService.getExtendOrderById(id)
 
     if (order === null) {
       res.status(StatusCodes.BAD_REQUEST).json({
@@ -308,52 +308,14 @@ const orderController = {
       return
     }
 
-    if (order.userId.toString() === userId) {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        status: StatusCodes.BAD_REQUEST,
-        message: 'You can not receive your gift'
-      })
-
-      return
+    if (order.status === 'purchased') {
+      order = await orderService.receiveGift(order, userId)
     }
-
-    if (order.status === 'sent') {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        status: StatusCodes.BAD_REQUEST,
-        message: 'The gift has already been given'
-      })
-
-      return
-    }
-
-    const sender = await userSevice.getUserById(order.userId)
-
-    if (sender === null) {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        status: StatusCodes.BAD_REQUEST,
-        message: 'Sender not found'
-      })
-
-      return
-    }
-
-    const gift = await giftSevice.getGift(order.giftId)
-
-    if (gift === null) {
-      res.status(StatusCodes.BAD_REQUEST).json({
-        status: StatusCodes.BAD_REQUEST,
-        message: 'Gift not found'
-      })
-
-      return
-    }
-
-    const receivedOrder = await orderService.receiveGift(order, userId)
 
     try {
       res.status(StatusCodes.OK).json({
         status: StatusCodes.OK,
-        data: receivedOrder
+        data: order
       })
     } catch (error) {
       logger.error(error)

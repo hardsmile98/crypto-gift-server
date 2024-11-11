@@ -1,7 +1,7 @@
 import { generateRandomHash } from '@/utils'
 import { botApiService, giftSevice, userSevice, type IPayment } from '@/modules'
 import { orderRepository } from './order.repository'
-import { EnumOrderAction, type IOrder } from './order.type'
+import { EnumOrderAction, type IExtendOrder } from './order.type'
 
 const orderService = {
   purchaseGift: async (payment: IPayment) => {
@@ -13,7 +13,7 @@ const orderService = {
       purchaseDate: Date.now()
     })
 
-    await orderService.addHistoryRecord(newOrder.userId, newOrder, EnumOrderAction.purchase)
+    await orderService.addHistoryRecord(newOrder.userId, newOrder._id, EnumOrderAction.purchase)
 
     await giftSevice.decreaseAvailable(payment.giftId)
 
@@ -31,16 +31,16 @@ const orderService = {
     }
   },
 
-  receiveGift: async (order: IOrder, recipientId: string) => {
+  receiveGift: async (order: IExtendOrder, recipientId: string) => {
     await orderRepository.updateOrder(order._id, { status: 'sent', sendDate: Date.now(), recipientId })
 
     await userSevice.increaseGiftsReceived(recipientId)
-    await userSevice.increaseGiftsSent(order.userId)
+    await userSevice.increaseGiftsSent(order.userId._id)
 
     const receivedOrder = await orderRepository.findExtendOrderById(order._id)
 
-    await orderService.addHistoryRecord(recipientId, order, EnumOrderAction.receive)
-    await orderService.addHistoryRecord(order.userId, order, EnumOrderAction.send)
+    await orderService.addHistoryRecord(recipientId, order._id, EnumOrderAction.receive)
+    await orderService.addHistoryRecord(order.userId._id, order._id, EnumOrderAction.send)
 
     if (receivedOrder !== null) {
       await botApiService.orderNotification({
@@ -75,11 +75,11 @@ const orderService = {
     return receivedOrder
   },
 
-  addHistoryRecord: async (userId: string, order: IOrder, action: EnumOrderAction) => {
+  addHistoryRecord: async (userId: string, orderId: string, action: EnumOrderAction) => {
     await orderRepository.createOrderAction({
       userId,
       action,
-      associatedOrderId: order._id
+      associatedOrderId: orderId
     })
   },
 
