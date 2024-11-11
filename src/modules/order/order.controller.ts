@@ -315,7 +315,10 @@ const orderController = {
     try {
       res.status(StatusCodes.OK).json({
         status: StatusCodes.OK,
-        data: order
+        data: {
+          order,
+          myUserId: userId
+        }
       })
     } catch (error) {
       logger.error(error)
