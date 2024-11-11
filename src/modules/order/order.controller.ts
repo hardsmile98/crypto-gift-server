@@ -92,7 +92,7 @@ const orderController = {
     res: Response
   ): Promise<void> => {
     try {
-      const orders = await orderService.getGiftHistory(req.query.giftId, 10)
+      const orders = await orderService.getGiftHistory(req.query.giftId, 100)
 
       res.status(StatusCodes.OK).json({
         status: StatusCodes.OK,
