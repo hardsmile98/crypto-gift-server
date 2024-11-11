@@ -12,11 +12,7 @@ const api = axios.create({
 const botApiService = {
   getAvatar: async (telegramId: number): Promise<string> => {
     try {
-      const response = await api.post<{ data: string }>('/getAvatar', {
-        body: {
-          telegramId
-        }
-      })
+      const response = await api.post<{ data: string }>('/getAvatar', telegramId)
 
       return response?.data?.data
     } catch (error) {
@@ -28,9 +24,7 @@ const botApiService = {
 
   orderNotification: async (data: NotificationData): Promise<boolean> => {
     try {
-      const response = await api.post<{ data: boolean }>('/notification', {
-        body: data
-      })
+      const response = await api.post<{ data: boolean }>('/notification', data)
 
       return response?.data?.data
     } catch (error) {
