@@ -131,14 +131,6 @@ const orderRepository = {
       },
       {
         $lookup: {
-          from: 'users',
-          localField: 'userId',
-          foreignField: '_id',
-          as: 'user'
-        }
-      },
-      {
-        $lookup: {
           from: 'orders',
           localField: 'associatedOrderId',
           foreignField: '_id',
@@ -146,10 +138,18 @@ const orderRepository = {
         }
       },
       {
-        $unwind: { path: '$user', preserveNullAndEmptyArrays: true }
+        $unwind: { path: '$order', preserveNullAndEmptyArrays: true }
       },
       {
-        $unwind: { path: '$order', preserveNullAndEmptyArrays: true }
+        $lookup: {
+          from: 'users',
+          localField: 'order.userId',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: { path: '$user', preserveNullAndEmptyArrays: true }
       },
       {
         $lookup: {
