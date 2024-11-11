@@ -30,9 +30,9 @@ export interface IOrder {
 }
 
 export interface IExtendOrder extends Omit<IOrder, 'userId' | 'giftId' | 'recipientId'> {
-  userId: string | IUser
-  giftId: string | IGift
-  recipientId: string | IUser
+  userId: IUser
+  giftId: IGift
+  recipientId: IUser
 }
 
 export interface IExtendActionHistory extends Omit<IOrderAction, 'associatedOrderId'> {

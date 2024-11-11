@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import { validateRequest } from '../../middlewares'
+import { validateRequest } from '@/middlewares'
 import { authController } from './auth.controller'
 import { getTokenSchema } from './auth.schema'
 

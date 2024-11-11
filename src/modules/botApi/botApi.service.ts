@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { config, logger } from '../../lib'
+import { config, logger } from '@/lib'
 import { type NotificationData } from './botApi.types'
 
 const api = axios.create({

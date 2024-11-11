@@ -1,8 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
-import { config } from './lib'
-import { rootRouter } from './routes'
+import { config } from '@/lib'
+import { rootRouter } from '@/routes'
 import {
   extractJwtMiddleware,
   requestLoggerMiddleware

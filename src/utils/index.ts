@@ -1,5 +1,5 @@
 import * as crypto from 'crypto'
-import { config } from '../lib'
+import { config } from '@/lib'
 
 export const isDev = (): boolean => {
   return config.ENV_MODE === 'dev'

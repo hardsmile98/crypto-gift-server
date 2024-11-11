@@ -1,6 +1,6 @@
 import { type NextFunction, type Request, type Response } from 'express'
 
-import { authServices } from '../modules'
+import { authServices } from '@/modules'
 
 export const extractJwtMiddleware = (
   req: Request,

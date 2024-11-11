@@ -1,8 +1,8 @@
 import { type Request, type Response } from 'express'
 import { type GetOrder } from './bot.schema'
-import { orderService } from '../order'
+import { orderService } from '@/modules'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { logger } from '../../lib'
+import { logger } from '@/lib'
 
 const botController = {
   getOrder: async (
@@ -24,15 +24,13 @@ const botController = {
         return
       }
 
-      if (typeof order?.userId === 'object') {
-        if (order.userId.telegramId !== telegramId || order.status !== 'purchased') {
-          res.status(StatusCodes.BAD_REQUEST).json({
-            status: StatusCodes.BAD_REQUEST,
-            data: null
-          })
+      if (order.userId.telegramId !== telegramId || order.status !== 'purchased') {
+        res.status(StatusCodes.BAD_REQUEST).json({
+          status: StatusCodes.BAD_REQUEST,
+          data: null
+        })
 
-          return
-        }
+        return
       }
 
       res.status(StatusCodes.OK).json({

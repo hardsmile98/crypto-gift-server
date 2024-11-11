@@ -1,5 +1,5 @@
 import { type NextFunction, type Response, type Request } from 'express'
-import { logger } from '../lib'
+import { logger } from '@/lib'
 
 export const requestLoggerMiddleware = (
   req: Request,

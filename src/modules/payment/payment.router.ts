@@ -1,6 +1,7 @@
 import { Router } from 'express'
+
+import { checkWebhookUpdates } from '@/middlewares'
 import { paymentController } from './payment.controller'
-import { checkWebhookUpdates } from '../../middlewares'
 
 const paymentRouter = Router()
 

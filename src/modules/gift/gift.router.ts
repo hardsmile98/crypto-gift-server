@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
+import { validateRequest } from '@/middlewares'
 import { giftController } from './gift.controller'
-import { validateRequest } from '../../middlewares'
 import { getGiftSchema } from './gift.schema'
 
 const giftRouter = Router()

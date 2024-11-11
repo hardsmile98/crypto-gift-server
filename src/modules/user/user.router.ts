@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
+import { validateRequest } from '@/middlewares'
 import { userController } from './user.controller'
-import { validateRequest } from '../../middlewares'
 import { getProfileSchema } from './user.schema'
 
 const userRouter = Router()

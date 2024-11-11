@@ -2,9 +2,9 @@ import { type Request, type Response } from 'express'
 import { type LoginType } from './auth.schema'
 import { authServices } from './auth.service'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { logger } from '../../lib'
-import { isDev } from '../../utils'
-import { userSevice } from '../user'
+import { logger } from '@/lib'
+import { isDev } from '@/utils'
+import { userSevice } from '@/modules'
 
 const authController = {
   getToken: async (
@@ -14,7 +14,7 @@ const authController = {
     try {
       const initData = req.body.initData
 
-      if (!authServices.verifyInitData(initData) && !isDev()) {
+      if (!authServices.verifyInitData(initData) && isDev() === true) {
         res.status(StatusCodes.BAD_REQUEST).json({
           status: StatusCodes.BAD_REQUEST,
           message: 'Error in verify initData'

@@ -3,12 +3,12 @@ import { User } from './user.model'
 import { type UpdateQuery } from 'mongoose'
 
 const userRepository = {
-  findByTelegramId: async (telegramId: number): Promise<IUser | null> => {
-    return await User.findOne({ telegramId })
+  findByTelegramId: async (telegramId: number) => {
+    return await User.findOne({ telegramId }).lean()
   },
 
-  findById: async (id: string): Promise<IUser | null> => {
-    return await User.findById(id)
+  findById: async (id: string) => {
+    return await User.findById(id).lean()
   },
 
   createUser: async (userData: Partial<IUser>): Promise<IUser> => {
@@ -16,7 +16,7 @@ const userRepository = {
     return user
   },
 
-  updateUser: async (id: string, update: UpdateQuery<IUser>): Promise<void> => {
+  updateUser: async (id: string, update: UpdateQuery<IUser>) => {
     await User.updateOne(
       { _id: id },
       { ...update },
@@ -24,8 +24,11 @@ const userRepository = {
     )
   },
 
-  getLeaderboard: async (limit: number): Promise<IUser[]> => {
-    return await User.find().sort({ giftsReceived: -1, createdAt: 1 }).limit(limit)
+  getLeaderboard: async (limit: number) => {
+    return await User.find()
+      .sort({ giftsReceived: -1, createdAt: 1 })
+      .limit(limit)
+      .lean()
   },
 
   findHigherRankCount: async (user: IUser): Promise<number> => {

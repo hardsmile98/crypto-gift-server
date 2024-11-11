@@ -1,7 +1,7 @@
 import { type NextFunction, type Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { type IContextRequest } from '../types'
-import { logger } from '../lib'
+import { logger } from '@/lib'
 
 export const checkAuthMiddleware = (
   req: IContextRequest,

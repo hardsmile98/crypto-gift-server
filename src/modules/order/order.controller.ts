@@ -1,5 +1,8 @@
 import { type Response } from 'express'
-import { type IContextRequest } from '../../types'
+import { ReasonPhrases, StatusCodes } from 'http-status-codes'
+import { logger } from '@/lib'
+import { type IContextRequest } from '@/types'
+import { giftSevice, paymentService, userSevice } from '@/modules'
 import {
   type GetOrdersByStatus,
   type GetOrderByPaymentId,
@@ -9,10 +12,7 @@ import {
   type GetReceivedOrders,
   type ReceiveGift
 } from './order.schema'
-import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { logger } from '../../lib'
 import { orderService } from './order.service'
-import { giftSevice, paymentService, userSevice } from '../index'
 
 const orderController = {
   getOrderByPaymentId: async (
@@ -127,7 +127,7 @@ const orderController = {
         return
       }
 
-      if (typeof order.userId === 'object' && order.userId._id.toString() !== userId) {
+      if (order.userId._id !== userId) {
         res.status(StatusCodes.FORBIDDEN).json({
           status: StatusCodes.FORBIDDEN,
           message: ReasonPhrases.FORBIDDEN

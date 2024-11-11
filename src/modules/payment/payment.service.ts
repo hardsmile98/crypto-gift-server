@@ -1,9 +1,8 @@
 import CryptoBotAPI from 'crypto-bot-api'
-import { config } from '../../lib'
+import { config } from '@/lib'
+import { isDev } from '@/utils'
 import { paymentRepository } from './payment.repository'
-import { isDev } from '../../utils'
-import { type IWebhookUpdate, type IGift } from '../index'
-import { orderService } from '../index'
+import { orderService, type IWebhookUpdate, type IGift } from '@/modules'
 
 const cryptoBotAPI = new CryptoBotAPI(config.CRYPTO_BOT_API_TOKEN, isDev()
   ? 'testnet'

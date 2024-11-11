@@ -1,9 +1,9 @@
 
 import { type Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { logger } from '../../lib'
+import { logger } from '@/lib'
 import { userSevice } from './user.service'
-import { type IContextRequest } from '../../types'
+import { type IContextRequest } from '@/types'
 import { type GetProfile } from './user.schema'
 
 const userController = {

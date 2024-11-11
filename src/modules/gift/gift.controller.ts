@@ -1,9 +1,9 @@
 import { type Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { logger } from '../../lib'
+import { logger } from '@/lib'
+import { type IContextRequest } from '@/types'
 import { giftSevice } from './gift.service'
 import { type GetGift } from './gift.schema'
-import { type IContextRequest } from '../../types'
 
 const giftController = {
   getGifts: async (

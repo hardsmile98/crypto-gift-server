@@ -1,27 +1,29 @@
 import mongoose, { type UpdateQuery } from 'mongoose'
+import { type IGift, type IUser } from '@/modules'
 import { Order, OrderAction } from './order.model'
 import { type IOrderAction, type IOrder, type EnumOrderStatus, type IExtendOrder } from './order.type'
 
 const orderRepository = {
-  findExtendOrderById: async (id: string): Promise<IExtendOrder | null> => {
+  findExtendOrderById: async (id: string) => {
     const order = await Order.findById(id)
-      .populate('userId')
-      .populate('giftId')
-      .populate('recipientId')
+      .populate<{ userId: IUser }>('userId')
+      .populate<{ giftId: IGift }>('giftId')
+      .populate<{ recipientId: IUser }>('recipientId')
+      .lean()
     return order
   },
 
-  findOrderById: async (id: string): Promise<IOrder | null> => {
-    const order = await Order.findById(id)
+  findOrderById: async (id: string) => {
+    const order = await Order.findById(id).lean()
     return order
   },
 
-  createOrder: async (data: Partial<IOrder>): Promise<IOrder> => {
+  createOrder: async (data: Partial<IOrder>) => {
     const order = await Order.create(data)
     return order
   },
 
-  updateOrder: async (id: string, update: UpdateQuery<IOrder>): Promise<void> => {
+  updateOrder: async (id: string, update: UpdateQuery<IOrder>) => {
     await Order.updateOne(
       { _id: id },
       { ...update },
@@ -29,17 +31,19 @@ const orderRepository = {
     )
   },
 
-  finOrderByPayment: async (paymentId: string): Promise<IExtendOrder | null> => {
+  finOrderByPayment: async (paymentId: string) => {
     const order = await Order.findOne({ paymentId, status: 'purchased' })
-      .populate('userId')
-      .populate('giftId')
-      .populate('recipientId')
+      .populate<{ userId: IUser }>('userId')
+      .populate<{ giftId: IGift }>('giftId')
+      .populate<{ recipientId: IUser }>('recipientId')
+      .lean()
     return order
   },
 
-  findOrdersByStatus: async (status: EnumOrderStatus, userId: string): Promise<IExtendOrder[]> => {
+  findOrdersByStatus: async (status: EnumOrderStatus, userId: string) => {
     const orders = await Order.find({ status, userId }).sort({ createdAt: -1 })
-      .populate('giftId')
+      .populate<{ giftId: IGift }>('giftId')
+      .lean()
 
     return orders
   },
@@ -108,17 +112,18 @@ const orderRepository = {
     return actions
   },
 
-  createOrderAction: async (data: Partial<IOrderAction>): Promise<IOrderAction> => {
+  createOrderAction: async (data: Partial<IOrderAction>) => {
     const orderAction = await OrderAction.create(data)
     return orderAction
   },
 
-  getOrdersReceivedByUser: async (userId: string): Promise<IExtendOrder[]> => {
+  getOrdersReceivedByUser: async (userId: string) => {
     const orders = await Order.find({
       recipientId: userId
     })
-      .populate('userId')
-      .populate('giftId')
+      .populate<{ userId: IUser }>('userId')
+      .populate<{ giftId: IGift }>('giftId')
+      .lean()
     return orders
   },
 

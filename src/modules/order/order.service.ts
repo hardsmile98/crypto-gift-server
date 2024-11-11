@@ -1,10 +1,7 @@
-import { userSevice } from '../user'
-import { generateRandomHash } from '../../utils'
-import { giftSevice } from '../gift'
-import { type IPayment } from '../payment'
+import { generateRandomHash } from '@/utils'
+import { botApiService, giftSevice, userSevice, type IPayment } from '@/modules'
 import { orderRepository } from './order.repository'
 import { EnumOrderAction, type IOrder, type EnumOrderStatus } from './order.type'
-import { botApiService } from '../botApi'
 
 const orderService = {
   purchaseGift: async (payment: IPayment) => {
@@ -45,9 +42,7 @@ const orderService = {
     await orderService.addHistoryRecord(recipientId, order, EnumOrderAction.receive)
     await orderService.addHistoryRecord(order.userId, order, EnumOrderAction.send)
 
-    if (typeof receivedOrder?.recipientId === 'object' &&
-      typeof receivedOrder?.userId === 'object' &&
-      typeof receivedOrder?.giftId === 'object') {
+    if (receivedOrder !== null) {
       await botApiService.orderNotification({
         telegramId: receivedOrder.userId.telegramId,
         action: 'send',

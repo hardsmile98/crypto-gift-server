@@ -1,27 +1,27 @@
+import { type UpdateQuery } from 'mongoose'
 import type { IPayment } from './payment.types'
 import { Payment } from './payment.model'
-import { type UpdateQuery } from 'mongoose'
 
 const paymentRepository = {
-  createPayment: async (data: Partial<IPayment>): Promise<IPayment> => {
+  createPayment: async (data: Partial<IPayment>) => {
     const user = await Payment.create(data)
     return user
   },
 
-  findPaymentById: async (id: string): Promise<IPayment | null> => {
-    return await Payment.findById(id)
+  findPaymentById: async (id: string) => {
+    return await Payment.findById(id).lean()
   },
 
-  findPaymentByInvoiceId: async (invoiceId: number): Promise<IPayment | null> => {
-    return await Payment.findOne({ invoiceId })
+  findPaymentByInvoiceId: async (invoiceId: number) => {
+    return await Payment.findOne({ invoiceId }).lean()
   },
 
-  updatePayment: async (id: string, update: UpdateQuery<IPayment>): Promise<IPayment | null> => {
+  updatePayment: async (id: string, update: UpdateQuery<IPayment>) => {
     return await Payment.findOneAndUpdate(
       { _id: id },
       { ...update },
       { new: true }
-    )
+    ).lean()
   }
 }
 
