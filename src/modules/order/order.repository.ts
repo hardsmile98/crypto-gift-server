@@ -120,7 +120,7 @@ const orderRepository = {
   getOrdersReceivedByUser: async (userId: string) => {
     const orders = await Order.find({
       recipientId: userId
-    }).sort({ createdAt: -1 })
+    }).sort({ sendDate: -1 })
       .populate<{ userId: IUser }>('userId')
       .populate<{ giftId: IGift }>('giftId')
       .lean()

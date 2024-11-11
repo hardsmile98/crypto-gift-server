@@ -38,6 +38,7 @@ const orderSchema = new Schema({
 })
 
 orderSchema.index({ createdAt: -1 })
+orderSchema.index({ sendDate: -1 })
 
 const orderActionSchema = new Schema({
   userId: {
