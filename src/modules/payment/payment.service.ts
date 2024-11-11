@@ -18,9 +18,10 @@ const paymentService = {
     const invoice = await cryptoBotAPI.createInvoice({
       asset: gift.currency,
       amount: gift.price.toString(),
+      description: `Purchasing a ${gift.name} gift`,
       paidBtnName: 'callback',
       paidBtnUrl: `${config.MINIAPP_URL}?startapp=purchase_${newPayment._id}`,
-      hiddenMessage: 'Спасибо за покупку!',
+      hiddenMessage: 'Thanks for your purchase!',
       expiresIn: 3600
     })
 
