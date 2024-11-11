@@ -14,7 +14,7 @@ const authController = {
     try {
       const initData = req.body.initData
 
-      if (!authServices.verifyInitData(initData) && isDev() === true) {
+      if (!authServices.verifyInitData(initData) && !isDev()) {
         res.status(StatusCodes.BAD_REQUEST).json({
           status: StatusCodes.BAD_REQUEST,
           message: 'Error in verify initData'
