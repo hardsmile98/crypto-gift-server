@@ -12,6 +12,7 @@ export class AddGifts implements MigrationInterface {
         price: 5,
         currency: 'USDT',
         slug: 'delicious-cake',
+        bgColor: '#FE9F41',
         maxAvailable: 1000,
         available: 1000
       }
@@ -24,6 +25,7 @@ export class AddGifts implements MigrationInterface {
         price: 0.1,
         currency: 'TON',
         slug: 'green-star',
+        bgColor: '#46D100',
         maxAvailable: 2000,
         available: 2000
       }
@@ -36,13 +38,14 @@ export class AddGifts implements MigrationInterface {
         price: 0.01,
         currency: 'ETH',
         slug: 'blue-star',
+        bgColor: '#007AFF',
         maxAvailable: 5000,
         available: 5000
       }
     )
   }
 
-  async down (db: Db, client: MongoClient): Promise<void | never> {
+  async down (db: Db, _client: MongoClient): Promise<void | never> {
     await db.dropCollection('gifts')
   }
 }
