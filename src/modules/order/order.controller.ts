@@ -154,9 +154,20 @@ const orderController = {
     res: Response
   ) => {
     try {
-      const userId = req.query.id
+      const userId = req.context?.userId
 
-      const orders = await orderService.getOrdersReceivedByUser(userId)
+      if (userId === undefined) {
+        res.status(StatusCodes.BAD_REQUEST).json({
+          status: StatusCodes.BAD_REQUEST,
+          message: 'User is not found'
+        })
+
+        return
+      }
+
+      const queryId = req.query.userId
+
+      const orders = await orderService.getOrdersReceivedByUser(queryId ?? userId)
 
       res.status(StatusCodes.OK).json({
         status: StatusCodes.OK,

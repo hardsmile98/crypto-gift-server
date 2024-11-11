@@ -23,11 +23,11 @@ export const getOrderById = z.object({
 
 export const getReceivedOrders = z.object({
   query: z.object({
-    id: z.string({
+    userId: z.string({
       message: 'Id is required'
     }).refine((val) => {
       return mongoose.Types.ObjectId.isValid(val)
-    })
+    }).optional()
   })
 })
 

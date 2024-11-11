@@ -44,7 +44,7 @@ const userController = {
         return
       }
 
-      const queryId = req.query.id
+      const queryId = req.query.userId
       const id = queryId ?? userId
 
       const user = await userSevice.getUserById(id)
