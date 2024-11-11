@@ -4,7 +4,6 @@ import { logger } from '@/lib'
 import { type IContextRequest } from '@/types'
 import { giftSevice, paymentService, userSevice } from '@/modules'
 import {
-  type GetOrdersByStatus,
   type GetOrderByPaymentId,
   type GetOrderById,
   type BuyGift,
@@ -56,8 +55,8 @@ const orderController = {
     }
   },
 
-  getOrdersByStatus: async (
-    req: IContextRequest<unknown, unknown, unknown, GetOrdersByStatus>,
+  getOrdersPusrchased: async (
+    req: IContextRequest,
     res: Response
   ): Promise<void> => {
     try {
@@ -72,7 +71,7 @@ const orderController = {
         return
       }
 
-      const orders = await orderService.getOrdersByStatus(req.query.status, userId)
+      const orders = await orderService.getOrdersPusrchased(userId)
 
       res.status(StatusCodes.OK).json({
         status: StatusCodes.OK,

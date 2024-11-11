@@ -1,6 +1,5 @@
 import { z } from 'zod'
 import mongoose from 'mongoose'
-import { EnumOrderStatus } from './order.type'
 
 export const getOrderByPaymentIdSchema = z.object({
   query: z.object({
@@ -29,12 +28,6 @@ export const getReceivedOrders = z.object({
     }).refine((val) => {
       return mongoose.Types.ObjectId.isValid(val)
     })
-  })
-})
-
-export const getOrdersByStatusSchema = z.object({
-  query: z.object({
-    status: z.nativeEnum(EnumOrderStatus)
   })
 })
 
@@ -77,4 +70,3 @@ export type GetReceivedOrders = z.infer<typeof getReceivedOrders>['query']
 export type GetOrderById = z.infer<typeof getOrderById>['query']
 export type GetGiftHistory = z.infer<typeof getGiftHistorySchema>['query']
 export type GetOrderByPaymentId = z.infer<typeof getOrderByPaymentIdSchema>['query']
-export type GetOrdersByStatus = z.infer<typeof getOrdersByStatusSchema>['query']

@@ -6,7 +6,6 @@ import {
   getGiftHistorySchema,
   getOrderById,
   getOrderByPaymentIdSchema,
-  getOrdersByStatusSchema,
   getReceivedOrders,
   receiveGiftSchema
 } from './order.schema'
@@ -33,9 +32,8 @@ orderRouter.get(
 )
 
 orderRouter.get(
-  '/order/byStatus',
-  validateRequest(getOrdersByStatusSchema),
-  orderController.getOrdersByStatus
+  '/order/getPurchased',
+  orderController.getOrdersPusrchased
 )
 
 orderRouter.get(

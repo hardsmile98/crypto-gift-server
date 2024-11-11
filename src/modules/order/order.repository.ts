@@ -1,7 +1,7 @@
 import mongoose, { type UpdateQuery } from 'mongoose'
 import { type IGift, type IUser } from '@/modules'
 import { Order, OrderAction } from './order.model'
-import { type IOrderAction, type IOrder, type EnumOrderStatus, type IExtendOrder } from './order.type'
+import { type IOrderAction, type IOrder, type IExtendOrder } from './order.type'
 
 const orderRepository = {
   findExtendOrderById: async (id: string) => {
@@ -40,8 +40,8 @@ const orderRepository = {
     return order
   },
 
-  findOrdersByStatus: async (status: EnumOrderStatus, userId: string) => {
-    const orders = await Order.find({ status, userId }).sort({ createdAt: -1 })
+  findOrdersPusrchased: async (userId: string) => {
+    const orders = await Order.find({ status: 'purchased', userId }).sort({ purchaseDate: -1 })
       .populate<{ giftId: IGift }>('giftId')
       .lean()
 

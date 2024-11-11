@@ -1,7 +1,7 @@
 import { generateRandomHash } from '@/utils'
 import { botApiService, giftSevice, userSevice, type IPayment } from '@/modules'
 import { orderRepository } from './order.repository'
-import { EnumOrderAction, type IOrder, type EnumOrderStatus } from './order.type'
+import { EnumOrderAction, type IOrder } from './order.type'
 
 const orderService = {
   purchaseGift: async (payment: IPayment) => {
@@ -87,8 +87,8 @@ const orderService = {
     return await orderRepository.finOrderByPayment(paymentId)
   },
 
-  getOrdersByStatus: async (status: EnumOrderStatus, userId: string) => {
-    return await orderRepository.findOrdersByStatus(status, userId)
+  getOrdersPusrchased: async (userId: string) => {
+    return await orderRepository.findOrdersPusrchased(userId)
   },
 
   getGiftHistory: async (giftId: string, limit: number) => {
