@@ -123,6 +123,7 @@ const orderRepository = {
     })
       .populate<{ userId: IUser }>('userId')
       .populate<{ giftId: IGift }>('giftId')
+      .sort({ createdAt: -1 })
       .lean()
     return orders
   },
