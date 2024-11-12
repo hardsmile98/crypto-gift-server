@@ -1,4 +1,4 @@
-import { type OrderActions } from '../order'
+import { type OrderActions } from '../../modules/order'
 
 export interface NotificationData {
   telegramId: number

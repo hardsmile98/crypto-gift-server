@@ -22,7 +22,7 @@ const botApiService = {
     }
   },
 
-  orderNotification: async (data: NotificationData): Promise<boolean> => {
+  sendNotification: async (data: NotificationData): Promise<boolean> => {
     try {
       const response = await api.post<{ data: boolean }>('/notification', data)
 

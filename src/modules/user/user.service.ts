@@ -1,4 +1,4 @@
-import { botApiService } from '@/modules'
+import { botApiService } from '@/libs'
 import { userRepository } from './user.repository'
 import { type IUser } from './user.types'
 

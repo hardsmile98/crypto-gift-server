@@ -1,7 +1,8 @@
 import { generateRandomHash } from '@/utils'
-import { botApiService, giftSevice, userSevice, type IPayment } from '@/modules'
+import { giftSevice, userSevice, type IPayment } from '@/modules'
 import { orderRepository } from './order.repository'
 import { OrderActions, type IExtendOrder } from './order.type'
+import { botApiService } from '@/libs'
 
 const orderService = {
   purchaseGift: async (payment: IPayment) => {
@@ -21,7 +22,7 @@ const orderService = {
     const user = await userSevice.getUserById(newOrder.userId)
 
     if (gift !== null && user !== null) {
-      await botApiService.orderNotification({
+      await botApiService.sendNotification({
         telegramId: user.telegramId,
         action: OrderActions.purchase,
         orderDetail: {
@@ -43,7 +44,7 @@ const orderService = {
     await orderService.addHistoryRecord(order.userId._id, order._id, OrderActions.send)
 
     if (receivedOrder !== null) {
-      await botApiService.orderNotification({
+      await botApiService.sendNotification({
         telegramId: receivedOrder.userId.telegramId,
         action: OrderActions.send,
         orderDetail: {
@@ -57,7 +58,7 @@ const orderService = {
         }
       })
 
-      await botApiService.orderNotification({
+      await botApiService.sendNotification({
         telegramId: receivedOrder.recipientId.telegramId,
         action: OrderActions.receive,
         orderDetail: {
