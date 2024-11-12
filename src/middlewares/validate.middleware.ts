@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import { type Request, type Response, type NextFunction } from 'express'
 import { type AnyZodObject, ZodError } from 'zod'
-import { logger } from '@/lib'
+import { logger } from '@/libs'
 
 export const validateRequest =
   (schema: AnyZodObject) =>

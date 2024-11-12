@@ -1,7 +1,7 @@
 import { type NextFunction, type Response, type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import * as crypto from 'crypto'
-import { logger, config } from '@/lib'
+import { logger, config } from '@/libs'
 
 export const checkWebhookUpdates = (
   req: Request,

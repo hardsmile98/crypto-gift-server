@@ -1,7 +1,7 @@
 import mongoose, { type UpdateQuery } from 'mongoose'
 import { type IGift, type IUser } from '@/modules'
 import { Order, OrderAction } from './order.model'
-import { type IOrderAction, type IOrder, type IExtendOrder } from './order.type'
+import { type IOrderAction, type IOrder, type IExtendOrder, OrderStatuses, OrderActions } from './order.type'
 
 const orderRepository = {
   findExtendOrderById: async (id: string) => {
@@ -10,16 +10,19 @@ const orderRepository = {
       .populate<{ giftId: IGift }>('giftId')
       .populate<{ recipientId: IUser }>('recipientId')
       .lean()
+
     return order
   },
 
   findOrderById: async (id: string) => {
     const order = await Order.findById(id).lean()
+
     return order
   },
 
   createOrder: async (data: Partial<IOrder>) => {
     const order = await Order.create(data)
+
     return order
   },
 
@@ -32,16 +35,18 @@ const orderRepository = {
   },
 
   finOrderByPayment: async (paymentId: string) => {
-    const order = await Order.findOne({ paymentId, status: 'purchased' })
+    const order = await Order.findOne({ paymentId, status: OrderStatuses.purchased })
       .populate<{ userId: IUser }>('userId')
       .populate<{ giftId: IGift }>('giftId')
       .populate<{ recipientId: IUser }>('recipientId')
       .lean()
+
     return order
   },
 
   findOrdersPusrchased: async (userId: string) => {
-    const orders = await Order.find({ status: 'purchased', userId }).sort({ purchaseDate: -1 })
+    const orders = await Order.find({ status: OrderStatuses.purchased, userId })
+      .sort({ purchaseDate: -1 })
       .populate<{ giftId: IGift }>('giftId')
       .lean()
 
@@ -52,7 +57,7 @@ const orderRepository = {
     const actions = await OrderAction.aggregate([
       {
         $match: {
-          action: { $in: ['purchase', 'send'] }
+          action: { $in: [OrderActions.purchase, OrderActions.send] }
         }
       },
       {
@@ -124,6 +129,7 @@ const orderRepository = {
       .populate<{ userId: IUser }>('userId')
       .populate<{ giftId: IGift }>('giftId')
       .lean()
+
     return orders
   },
 

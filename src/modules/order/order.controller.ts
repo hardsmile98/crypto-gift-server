@@ -1,6 +1,6 @@
 import { type Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { logger } from '@/lib'
+import { logger } from '@/libs'
 import { type IContextRequest } from '@/types'
 import { giftSevice, paymentService, userSevice } from '@/modules'
 import {
@@ -32,7 +32,7 @@ const orderController = {
         return
       }
 
-      if (typeof order.userId === 'object' && order.userId._id.toString() !== userId) {
+      if (order.userId._id !== userId) {
         res.status(StatusCodes.FORBIDDEN).json({
           status: StatusCodes.FORBIDDEN,
           message: ReasonPhrases.FORBIDDEN

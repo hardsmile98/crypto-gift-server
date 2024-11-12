@@ -4,16 +4,18 @@ import { type UpdateQuery } from 'mongoose'
 
 const giftRepository = {
   findGifts: async (): Promise<IGift[]> => {
-    const gifts = await Gift.find()
+    const gifts = await Gift.find().lean()
+
     return gifts
   },
 
-  findGiftById: async (id: string): Promise<IGift | null> => {
-    const gift = await Gift.findById(id)
+  findGiftById: async (id: string) => {
+    const gift = await Gift.findById(id).lean()
+
     return gift
   },
 
-  updateGift: async (id: string, update: UpdateQuery<IGift>): Promise<void> => {
+  updateGift: async (id: string, update: UpdateQuery<IGift>) => {
     await Gift.updateOne(
       { _id: id },
       { ...update },

@@ -1,15 +1,26 @@
+
+export enum PaymentStatuses {
+  active = 'active',
+  processed = 'processed'
+}
 export interface IPayment {
   _id: string
   userId: string
   giftId: string
-  status: 'active' | 'processed'
+  status: PaymentStatuses
   invoiceId: number
   createAt: number
 }
 
+export enum PaymentWebhookStatuses {
+  active = 'active',
+  paid = 'paid',
+  expired = 'expired'
+}
+
 export interface IPaymentWebhook {
   invoice_id: number
-  status: 'active' | 'paid' | 'expired'
+  status: PaymentWebhookStatuses
   hash: string
   asset: string
   amount: string
@@ -25,9 +36,13 @@ export interface IPaymentWebhook {
   expiration_date?: string
 }
 
+export enum UpdateTypes {
+  invoicePaid = 'invoice_paid'
+}
+
 export interface IWebhookUpdate {
   update_id: number
-  update_type: 'invoice_paid'
+  update_type: UpdateTypes
   request_date: string
   payload: IPaymentWebhook
 }

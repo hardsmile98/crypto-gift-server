@@ -1,7 +1,7 @@
 import { generateRandomHash } from '@/utils'
 import { botApiService, giftSevice, userSevice, type IPayment } from '@/modules'
 import { orderRepository } from './order.repository'
-import { EnumOrderAction, type IExtendOrder } from './order.type'
+import { OrderActions, type IExtendOrder } from './order.type'
 
 const orderService = {
   purchaseGift: async (payment: IPayment) => {
@@ -13,7 +13,7 @@ const orderService = {
       purchaseDate: Date.now()
     })
 
-    await orderService.addHistoryRecord(newOrder.userId, newOrder._id, EnumOrderAction.purchase)
+    await orderService.addHistoryRecord(newOrder.userId, newOrder._id, OrderActions.purchase)
 
     await giftSevice.decreaseAvailable(payment.giftId)
 
@@ -23,7 +23,7 @@ const orderService = {
     if (gift !== null && user !== null) {
       await botApiService.orderNotification({
         telegramId: user.telegramId,
-        action: 'purchase',
+        action: OrderActions.purchase,
         orderDetail: {
           gift: gift.name
         }
@@ -39,13 +39,13 @@ const orderService = {
 
     const receivedOrder = await orderRepository.findExtendOrderById(order._id)
 
-    await orderService.addHistoryRecord(recipientId, order._id, EnumOrderAction.receive)
-    await orderService.addHistoryRecord(order.userId._id, order._id, EnumOrderAction.send)
+    await orderService.addHistoryRecord(recipientId, order._id, OrderActions.receive)
+    await orderService.addHistoryRecord(order.userId._id, order._id, OrderActions.send)
 
     if (receivedOrder !== null) {
       await botApiService.orderNotification({
         telegramId: receivedOrder.userId.telegramId,
-        action: 'send',
+        action: OrderActions.send,
         orderDetail: {
           gift: receivedOrder.giftId.name,
           from: {
@@ -59,7 +59,7 @@ const orderService = {
 
       await botApiService.orderNotification({
         telegramId: receivedOrder.recipientId.telegramId,
-        action: 'receive',
+        action: OrderActions.receive,
         orderDetail: {
           gift: receivedOrder.giftId.name,
           from: {
@@ -75,7 +75,7 @@ const orderService = {
     return receivedOrder
   },
 
-  addHistoryRecord: async (userId: string, orderId: string, action: EnumOrderAction) => {
+  addHistoryRecord: async (userId: string, orderId: string, action: OrderActions) => {
     await orderRepository.createOrderAction({
       userId,
       action,

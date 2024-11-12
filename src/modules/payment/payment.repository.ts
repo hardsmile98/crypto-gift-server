@@ -5,6 +5,7 @@ import { Payment } from './payment.model'
 const paymentRepository = {
   createPayment: async (data: Partial<IPayment>) => {
     const user = await Payment.create(data)
+
     return user
   },
 

@@ -1,6 +1,8 @@
+import { type OrderActions } from '../order'
+
 export interface NotificationData {
   telegramId: number
-  action: 'purchase' | 'send' | 'receive'
+  action: OrderActions
   orderDetail: {
     gift: string
     to?: {

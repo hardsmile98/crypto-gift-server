@@ -2,7 +2,7 @@ import { type Request, type Response } from 'express'
 import { type LoginType } from './auth.schema'
 import { authServices } from './auth.service'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { logger } from '@/lib'
+import { logger } from '@/libs'
 import { isDev } from '@/utils'
 import { userSevice } from '@/modules'
 

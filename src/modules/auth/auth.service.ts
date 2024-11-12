@@ -1,6 +1,6 @@
 import * as crypto from 'crypto'
 import jwt from 'jsonwebtoken'
-import { config } from '@/lib'
+import { config } from '@/libs'
 import { type InitDataPayload } from './auth.types'
 
 const authServices = {

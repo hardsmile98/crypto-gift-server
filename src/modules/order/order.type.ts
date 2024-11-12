@@ -1,6 +1,6 @@
 import { type IUser, type IGift } from '../index'
 
-export enum EnumOrderAction {
+export enum OrderActions {
   purchase = 'purchase',
   send = 'send',
   receive = 'receive'
@@ -8,11 +8,11 @@ export enum EnumOrderAction {
 export interface IOrderAction {
   _id: string
   userId: string
-  action: EnumOrderAction
+  action: OrderActions
   associatedOrderId: string
 }
 
-export enum EnumOrderStatus {
+export enum OrderStatuses {
   purchased = 'purchased',
   sent = 'sent'
 }
@@ -22,7 +22,7 @@ export interface IOrder {
   hash: string
   userId: string
   giftId: string
-  status: EnumOrderStatus
+  status: OrderStatuses
   purchaseDate: number
   paymentId: string
   sendDate: number

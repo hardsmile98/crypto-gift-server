@@ -3,17 +3,19 @@ import { userRepository } from './user.repository'
 import { type IUser } from './user.types'
 
 const userSevice = {
-  getUserByTelegramId: async (telegramId: number): Promise<IUser | null> => {
+  getUserByTelegramId: async (telegramId: number) => {
     const user = await userRepository.findByTelegramId(telegramId)
+
     return user
   },
 
-  getUserById: async (id: string): Promise<IUser | null> => {
+  getUserById: async (id: string) => {
     const user = await userRepository.findById(id)
+
     return user
   },
 
-  createUser: async (data: Partial<IUser>): Promise<IUser> => {
+  createUser: async (data: Partial<IUser>) => {
     if (data.telegramId !== undefined) {
       const avatar = await botApiService.getAvatar(data.telegramId)
 

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { botController } from './bot.controller'
-import { config } from '@/lib'
+import { config } from '@/libs'
 import { validateRequest } from '@/middlewares'
 import { getOrderSchema } from './bot.schema'
 

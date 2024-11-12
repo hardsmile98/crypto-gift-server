@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import { app } from './app'
-import { config, connectDatabase } from './lib'
+import { config, connectDatabase } from './libs'
 
 async function bootsrap (): Promise<void> {
   try {

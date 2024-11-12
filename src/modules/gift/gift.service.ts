@@ -1,18 +1,18 @@
 import { giftRepository } from './gift.repository'
-import { type IGift } from './gift.types'
 
 const giftSevice = {
-  getGifts: async (): Promise<IGift[]> => {
+  getGifts: async () => {
     const gifts = await giftRepository.findGifts()
     return gifts
   },
 
-  getGift: async (id: string): Promise<IGift | null> => {
+  getGift: async (id: string) => {
     const gift = await giftRepository.findGiftById(id)
+
     return gift
   },
 
-  decreaseAvailable: async (id: string): Promise<boolean> => {
+  decreaseAvailable: async (id: string) => {
     const gift = await giftRepository.findGiftById(id)
 
     if (gift == null) {

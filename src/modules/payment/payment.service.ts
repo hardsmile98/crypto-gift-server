@@ -1,8 +1,8 @@
 import CryptoBotAPI from 'crypto-bot-api'
-import { config } from '@/lib'
+import { config } from '@/libs'
 import { isDev } from '@/utils'
 import { paymentRepository } from './payment.repository'
-import { orderService, type IWebhookUpdate, type IGift } from '@/modules'
+import { orderService, type IWebhookUpdate, type IGift, PaymentStatuses, PaymentWebhookStatuses, UpdateTypes } from '@/modules'
 
 const cryptoBotAPI = new CryptoBotAPI(config.CRYPTO_BOT_API_TOKEN, isDev()
   ? 'testnet'
@@ -39,20 +39,20 @@ const paymentService = {
 
     const payment = await paymentRepository.findPaymentByInvoiceId(update.payload.invoice_id)
 
-    if (payment === null || payment.status !== 'active') {
+    if (payment === null || payment.status !== PaymentStatuses.active) {
       return false
     }
 
-    if (update.payload.status !== 'paid') {
+    if (update.payload.status !== PaymentWebhookStatuses.paid) {
       return false
     }
 
     switch (update.update_type) {
-      case 'invoice_paid': {
+      case UpdateTypes.invoicePaid: {
         await orderService.purchaseGift(payment)
 
         await paymentRepository.updatePayment(payment._id, {
-          status: 'processed'
+          status: PaymentStatuses.processed
         })
 
         return true

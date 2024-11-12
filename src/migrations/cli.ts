@@ -1,5 +1,5 @@
 import { mongoMigrateCli } from 'mongo-migrate-ts'
-import { config } from '../lib'
+import { config } from '../libs'
 
 mongoMigrateCli({
   uri: config.MONGO_DATABASE_URL,

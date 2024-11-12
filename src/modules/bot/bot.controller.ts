@@ -1,8 +1,8 @@
 import { type Request, type Response } from 'express'
 import { type GetOrder } from './bot.schema'
-import { orderService } from '@/modules'
+import { orderService, OrderStatuses } from '@/modules'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { logger } from '@/lib'
+import { logger } from '@/libs'
 
 const botController = {
   getOrder: async (
@@ -24,10 +24,10 @@ const botController = {
         return
       }
 
-      if (order.userId.telegramId !== telegramId || order.status !== 'purchased') {
+      if (order.userId.telegramId !== telegramId || order.status !== OrderStatuses.purchased) {
         res.status(StatusCodes.BAD_REQUEST).json({
           status: StatusCodes.BAD_REQUEST,
-          data: null
+          data: 'Invalid order query'
         })
 
         return
@@ -38,9 +38,7 @@ const botController = {
         data: {
           hash: order.hash,
           id: order._id,
-          gift: typeof order.giftId === 'object'
-            ? order.giftId?.name
-            : ''
+          gift: order.giftId?.name
         }
       })
     } catch (error) {

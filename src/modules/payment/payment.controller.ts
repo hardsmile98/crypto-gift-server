@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express'
 import { ReasonPhrases, StatusCodes } from 'http-status-codes'
-import { logger } from '@/lib'
+import { logger } from '@/libs'
 import { type IWebhookUpdate } from './payment.types'
 import { paymentService } from './payment.service'
 

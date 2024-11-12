@@ -1,3 +1,9 @@
+
+enum Currency {
+  USDT = 'USDT',
+  TON = 'TON',
+  ETH = 'ETH',
+}
 export interface IGift {
   _id: string
   name: string
@@ -7,5 +13,5 @@ export interface IGift {
   available: number
   maxAvailable: number
   bgColor: string
-  currency: 'USDT' | 'TON' | 'ETH'
+  currency: Currency
 }

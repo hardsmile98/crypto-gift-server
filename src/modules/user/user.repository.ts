@@ -11,8 +11,9 @@ const userRepository = {
     return await User.findById(id).lean()
   },
 
-  createUser: async (userData: Partial<IUser>): Promise<IUser> => {
+  createUser: async (userData: Partial<IUser>) => {
     const user = await User.create(userData)
+
     return user
   },
 
