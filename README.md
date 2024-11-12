@@ -6,7 +6,7 @@
 
 ```
 src/
-├── lib       
+├── libs       
 ├── middlewares 
 ├── migrations       
 ├── modules/
