@@ -5,7 +5,7 @@ import { ReasonPhrases, StatusCodes } from 'http-status-codes'
 import { logger } from '@/libs'
 
 const botController = {
-  getOrder: async (
+  getUserOrder: async (
     req: Request<unknown, unknown, unknown, GetOrder>,
     res: Response
   ): Promise<void> => {
@@ -18,16 +18,28 @@ const botController = {
       if (order === null) {
         res.status(StatusCodes.OK).json({
           status: StatusCodes.OK,
+          message: 'Order is not found!',
           data: null
         })
 
         return
       }
 
-      if (order.userId.telegramId !== telegramId || order.status !== OrderStatuses.purchased) {
-        res.status(StatusCodes.BAD_REQUEST).json({
-          status: StatusCodes.BAD_REQUEST,
-          data: 'Invalid order query'
+      if (order.userId.telegramId !== telegramId) {
+        res.status(StatusCodes.OK).json({
+          status: StatusCodes.OK,
+          message: 'The user does not have access to the order',
+          data: null
+        })
+
+        return
+      }
+
+      if (order.status !== OrderStatuses.purchased) {
+        res.status(StatusCodes.OK).json({
+          status: StatusCodes.OK,
+          message: 'The user does not have access to the order',
+          data: null
         })
 
         return

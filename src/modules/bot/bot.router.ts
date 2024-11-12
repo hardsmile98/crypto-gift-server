@@ -9,6 +9,6 @@ const botRouter = Router()
 botRouter.get(
     `/bot/${config.TELEGRAM_BOT_TOKEN}/getOrder`,
     validateRequest(getOrderSchema),
-    botController.getOrder)
+    botController.getUserOrder)
 
 export { botRouter }
