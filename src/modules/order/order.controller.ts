@@ -32,7 +32,7 @@ const orderController = {
         return
       }
 
-      if (order.userId._id !== userId) {
+      if (order.userId._id.toString() !== userId) {
         res.status(StatusCodes.FORBIDDEN).json({
           status: StatusCodes.FORBIDDEN,
           message: ReasonPhrases.FORBIDDEN
@@ -126,7 +126,7 @@ const orderController = {
         return
       }
 
-      if (order.userId._id !== userId) {
+      if (order.userId._id.toString() !== userId) {
         res.status(StatusCodes.FORBIDDEN).json({
           status: StatusCodes.FORBIDDEN,
           message: ReasonPhrases.FORBIDDEN
@@ -243,7 +243,7 @@ const orderController = {
         return
       }
 
-      if (giftFinded.available <= 0) {
+      if (giftFinded.available === 0) {
         res.status(StatusCodes.OK).json({
           status: StatusCodes.OK,
           message: 'The gifts are over'
