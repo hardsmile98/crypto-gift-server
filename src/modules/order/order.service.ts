@@ -40,13 +40,13 @@ const orderService = {
 
     const receivedOrder = await orderRepository.findExtendOrderById(order._id)
 
-    await orderService.addHistoryRecord(recipientId, order._id, OrderActions.receive)
     await orderService.addHistoryRecord(order.userId._id, order._id, OrderActions.send)
+    await orderService.addHistoryRecord(recipientId, order._id, OrderActions.receive)
 
     if (receivedOrder !== null) {
       await botApiService.sendNotification({
-        telegramId: receivedOrder.userId.telegramId,
-        action: OrderActions.send,
+        telegramId: receivedOrder.recipientId.telegramId,
+        action: OrderActions.receive,
         orderDetail: {
           gift: receivedOrder.giftId.name,
           from: {
@@ -59,8 +59,8 @@ const orderService = {
       })
 
       await botApiService.sendNotification({
-        telegramId: receivedOrder.recipientId.telegramId,
-        action: OrderActions.receive,
+        telegramId: receivedOrder.userId.telegramId,
+        action: OrderActions.send,
         orderDetail: {
           gift: receivedOrder.giftId.name,
           from: {
