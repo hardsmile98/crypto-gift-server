@@ -3,6 +3,7 @@ import { config, logger } from '@/libs'
 import { type NotificationData } from './botApi.types'
 import path from 'path'
 import { promises as fs } from 'fs'
+import { isDev } from '@/utils'
 
 const api = axios.create({
   baseURL: `${config.BOT_API_URL}/bot/api/${config.TELEGRAM_BOT_TOKEN}`,
@@ -17,6 +18,10 @@ const botApiService = {
       const response = await api.post<{ data: string }>('/getAvatar', { telegramId })
 
       const avatarUrl = response?.data?.data
+
+      if (isDev()) {
+        return avatarUrl
+      }
 
       if (avatarUrl === undefined) {
         return ''
