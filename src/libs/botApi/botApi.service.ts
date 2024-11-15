@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { config, logger } from '@/libs'
 import { type NotificationData } from './botApi.types'
+import path from 'path'
+import { promises as fs } from 'fs'
 
 const api = axios.create({
   baseURL: `${config.BOT_API_URL}/bot/api/${config.TELEGRAM_BOT_TOKEN}`,
@@ -14,7 +16,20 @@ const botApiService = {
     try {
       const response = await api.post<{ data: string }>('/getAvatar', { telegramId })
 
-      return response?.data?.data
+      const avatarUrl = response?.data?.data
+
+      if (avatarUrl === undefined) {
+        return ''
+      }
+
+      const imageResponse = await axios.get(avatarUrl, { responseType: 'arraybuffer' })
+
+      const fileName = `${telegramId}.jpg`
+      const filePath = path.resolve('/app/uploads', fileName)
+
+      await fs.writeFile(filePath, imageResponse.data)
+
+      return `/files/${fileName}`
     } catch (error) {
       logger.error(error)
 
