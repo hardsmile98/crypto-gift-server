@@ -19,12 +19,12 @@ const botApiService = {
 
       const avatarUrl = response?.data?.data
 
-      if (isDev()) {
-        return avatarUrl
-      }
-
       if (avatarUrl === undefined) {
         return ''
+      }
+
+      if (isDev()) {
+        return avatarUrl
       }
 
       const imageResponse = await axios.get(avatarUrl, { responseType: 'arraybuffer' })
