@@ -273,6 +273,8 @@ const orderController = {
         data: payment
       })
     } catch (error) {
+      console.log(error)
+
       logger.error(error)
 
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
